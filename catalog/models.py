@@ -27,3 +27,12 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
+class Category(models.Model):
+    # наименование категории
+    name = models.CharField(max_length=250)
+    # описание категории
+    description = models.TextField(blank=True)
+
+
+
+
