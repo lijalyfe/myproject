@@ -1,6 +1,12 @@
 from django.db import models
 from PIL import Image
-from .models import Category
+from django.apps import apps
+
+class Category(models.Model):
+    # наименование категории
+    name = models.CharField(max_length=250)
+    # описание категории
+    description = models.TextField(blank=True)
 
 class Product(models.Model):
     # наименование продукта
@@ -17,6 +23,10 @@ class Product(models.Model):
                 img.thumbnail((800, 800))
                 img.save(self.image.path)
 
+    def get_category_name(self):
+        Category = apps.get_model(app_label='catalog', model_name='Category')
+        return Category.objects.get(id=self.category.id).name
+
     # категория продукта
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     # цена за покупку товара
@@ -25,14 +35,3 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     # дата последнего изменения записи о товаре
     updated = models.DateTimeField(auto_now=True)
-
-
-class Category(models.Model):
-    # наименование категории
-    name = models.CharField(max_length=250)
-    # описание категории
-    description = models.TextField(blank=True)
-
-
-
-
