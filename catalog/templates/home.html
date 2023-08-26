@@ -22,6 +22,9 @@
 </div>
 
 <div class="container">
+{% extends 'base.html' %}
+
+{% block content %}
     <div class="row text-center">
         <div class="col-3">
             <div class="card mb-4 box-shadow">
@@ -41,6 +44,22 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h4 class="card-title">{{ product.name }}</h4>
+                    <p class="card-text">{{ product.description|truncatechars:100 }}</p>
+                    <a class="btn btn-primary" href="{% url 'product_detail' product.pk %}">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
