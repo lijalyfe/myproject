@@ -7,6 +7,8 @@ class Category(models.Model):
     name = models.CharField(max_length=250)
     # описание категории
     description = models.TextField(blank=True)
+    # добавленное поле
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Product(models.Model):
     # наименование продукта
