@@ -1,0 +1,30 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics",
+      "description": "All kinds of electronic gadgets",
+      "created_at": "2023-08-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Clothes",
+      "description": "Fashionable and stylish clothing",
+      "created_at": "2023-08-10T10:10:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Books",
+      "description": "Fiction and non-fiction books",
+      "created_at": "2023-08-10T10:20:00Z"
+    }
+  }
+]
+
