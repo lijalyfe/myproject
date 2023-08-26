@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.apps import apps
+from datetime import datetime
 
 class Category(models.Model):
     # наименование категории
@@ -8,7 +9,7 @@ class Category(models.Model):
     # описание категории
     description = models.TextField(blank=True)
     # добавленное поле
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now, editable=False)
 
 class Product(models.Model):
     # наименование продукта
