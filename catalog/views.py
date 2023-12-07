@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import*
+from .models import Product, Blog
 from django.views.generic import (
     ListView,
     DetailView,
@@ -9,10 +9,7 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy
 from .forms import BlogForm
-from flask import Flask, render_template, request, redirect, url_for
 from slugify import slugify
-
-app = Flask(__name__)
 
 
 def home(request):
@@ -58,36 +55,8 @@ class BlogDeleteView(DeleteView):
     template_name = 'blog/blog_delete.html'
     success_url = reverse_lazy('blog_list')
 
-@app.route('/articles/<slug>')
-def view_article(slug):
-    """Увеличение счетчика просмотров при открытии статьи"""
-    article = Article.query.filter_by(slug=slug).first()
-    if not article:
-        abort(404)
-    article.views += 1
-    db.session.commit()
-    return render_template('article.html', article=article)
-
-@app.route('/articles')
-def list_articles():
-    """Вывод списка статей с положительным признаком публикации"""
-    articles = Article.query.filter_by(published=True).all()
-    return render_template('articles.html', articles=articles)
 
 title = 'Статья об использовании Python в машинном обучении'
 slug = slugify(title)
-print(slug)  # 'statya-ob-ispolzovanii-python-v-mashinnom-obuchenii'
+print(slug)
 
-@app.route('/articles/<slug>/edit', methods=['GET', 'POST'])
-def edit_article(slug):
-    """Перенаправление пользователя после редактирования статьи"""
-    article = Article.query.filter_by(slug=slug).first()
-    if not article:
-        abort(404)
-    if request.method == 'POST':
-        article.title = request.form['title']
-        article.body = request.form['body']
-        article.published = request.form.get('published', False)
-        db.session.commit()
-        return redirect(url_for('view_article', slug=article.slug))
-    return render_template('edit_article.html', article=article)
