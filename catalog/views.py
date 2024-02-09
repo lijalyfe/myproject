@@ -6,6 +6,7 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
+    TemplateView,
 )
 from django.urls import reverse_lazy
 from .forms import BlogForm
@@ -18,9 +19,26 @@ def home(request):
 def contact(request):
     return render(request, 'contact.html')
 
-def product_detail(request, pk):
-    product = Product.objects.all()
-    return render(request, 'home.html', {'product': product})
+class HomeView(TemplateView):
+    template_name = 'catalog/home.html'
+    extra_context = {
+        'title': 'Главная',
+    }
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['object_list'] = Product.objects.all()
+        return context_data
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'catalog/home.html'
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+
 
 class BlogListView(ListView):
     model = Blog
